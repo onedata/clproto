@@ -1,8 +1,30 @@
-package veil.protocol.remote_file_management;
+package one.clproto.remote_file_management;
 
 message RemoteFileMangement {
     required string message_type = 1;
     required bytes input = 2;
+    optional string space_id = 3 [default = ""];
+}
+
+message GetAttr {
+    required string file_id = 1;
+}
+
+message StorageAttibutes {
+    optional string answer = 1 [default = "ok"];
+    optional int64 dev = 2 [default = 0];
+    optional int64 ino = 3 [default = 0];
+    optional int64 mode = 4 [default = 0];
+    optional int64 nlink = 5 [default = 1];
+    optional int64 uid = 6 [default = 0];
+    optional int64 gid = 7 [default = 0];
+    optional int64 rdev = 8 [default = 0];
+    optional int64 size = 9 [default = 0];
+    optional int64 blksize = 10 [default = 0];
+    optional int64 blocks = 11 [default = 0];
+    optional int64 atime = 12 [default = 0];
+    optional int64 mtime = 13 [default = 0];
+    optional int64 ctime = 14 [default = 0];
 }
 
 message CreateFile {
@@ -11,7 +33,7 @@ message CreateFile {
 }
 
 message DeleteFileAtStorage {
-    required string file_id = 1;    
+    required string file_id = 1;
 }
 
 message TruncateFile {
