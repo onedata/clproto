@@ -47,6 +47,7 @@ message FuseRequest {
         RemoveXattr remove_xattr = 15;
         ListXattr list_xattr = 16;
         SynchronizeBlock synchronize_block = 17;
+        GetParent get_parent = 18;
     }
 }
 
@@ -114,6 +115,10 @@ message Close {
     required bytes uuid = 1;
 }
 
+message GetParent {
+    required bytes uuid = 1;
+}
+
 // Generic FUSE client response
 message FuseResponse {
     required Status status = 1;
@@ -125,6 +130,7 @@ message FuseResponse {
         HelperParams helper_params = 5;
         Xattr xattr = 6;
         XattrList xattr_list = 7;
+        Dir dir = 8;
     }
 }
 
@@ -195,4 +201,8 @@ message XattrList {
 message SynchronizeBlock {
     required bytes uuid = 1;
     required FileBlock block = 2;
+}
+
+message Dir {
+    required bytes uuid = 1;
 }
