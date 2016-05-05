@@ -60,9 +60,18 @@ message FuseRequest {
         SetCdmiCompletionStatus set_cdmi_completion_status = 28;
         GetMimetype get_mimetype = 29;
         SetMimetype set_mimetype = 30;
+        GetFilePath get_file_path = 31;
+        FSync fsync = 32;
     }
 }
 
+message FSync {
+    required bytes uuid = 1;
+}
+
+message GetFilePath {
+    required bytes uuid = 1;
+}
 
 message GetFileAttr {
     required EntryType entry_type = 1;
@@ -193,7 +202,13 @@ message FuseResponse {
         TransferEncoding transfer_encoding = 11;
         CdmiCompletionStatus cdmi_completion_status = 12;
         Mimetype mimetype = 13;
+        Acl acl = 14;
+        FilePath file_path = 15;
     }
+}
+
+message FilePath {
+    required bytes value = 1;
 }
 
 message FileAttr {
