@@ -134,7 +134,8 @@ message Truncate {
 }
 
 message Release {
-    required bytes handle_id = 1;
+    required bytes uuid = 1;
+    required bytes handle_id = 2;
 }
 
 message GetParent {
