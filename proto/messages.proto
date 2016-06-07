@@ -46,6 +46,7 @@ message ClientMessage {
         Events                   events                    = 10;
         Subscription             subscription              = 11;
         SubscriptionCancellation subscription_cancellation = 12;
+        FlushEvents              flush_events              = 19;
 
         // diagnostic_messages.proto
         Ping                     ping                      = 13;
