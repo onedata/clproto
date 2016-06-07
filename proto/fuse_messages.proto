@@ -42,10 +42,10 @@ message FuseRequest {
         GetHelperParams get_helper_params = 10;
         Release release = 11;
         Truncate truncate = 12;
-        SynchronizeBlock synchronize_block = 13;
-        CreateStorageTestFile create_storage_test_file = 14;
-        VerifyStorageTestFile verify_storage_test_file = 15;
-        SynchronizeBlockAndComputeChecksum synchronize_block_and_compute_checksum = 16;
+        SynchronizeBlock synchronize_block = 17;
+        CreateStorageTestFile create_storage_test_file = 18;
+        VerifyStorageTestFile verify_storage_test_file = 19;
+        SynchronizeBlockAndComputeChecksum synchronize_block_and_compute_checksum = 21;
     }
 }
 
@@ -123,9 +123,9 @@ message FuseResponse {
         FileChildren file_children = 3;
         FileLocation file_location = 4;
         HelperParams helper_params = 5;
-        StorageTestFile storage_test_file = 6;
-        Dir dir = 7;
-        Checksum checksum = 8;
+        StorageTestFile storage_test_file = 8;
+        Dir dir = 9;
+        Checksum checksum = 10;
     }
 }
 

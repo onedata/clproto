@@ -63,7 +63,7 @@ message ClientMessage {
         DBSyncRequest            dbsync_request            = 18;
 
         // provider_messages.proto
-        ProviderRequest          provider_request          = 19;
+        ProviderRequest          provider_request          = 22;
     }
     
     optional bytes proxy_session_id = 20;
@@ -107,8 +107,8 @@ message ServerMessage {
         ProxyIOResponse          proxyio_response          = 16;
 
         // provider_messages.proto
-        ProviderResponse         provider_response         = 17;
+        ProviderResponse         provider_response         = 18;
     }
     
-    optional bytes proxy_session_id = 18;
+    optional bytes proxy_session_id = 17;
 }
