@@ -306,8 +306,9 @@ message VerifyStorageTestFile {
 }
 
 message SynchronizeBlock {
-    required bytes     uuid  = 1;
-    required FileBlock block = 2;
+    required bytes     uuid     = 1;
+    required FileBlock block    = 2;
+    optional bool      prefetch = 3 [default = true];
 }
 
 message Dir {
