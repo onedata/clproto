@@ -31,6 +31,8 @@ message ProviderRequest {
         FSync fsync = 16;
         GetFileDistribution get_file_distribution = 17;
         ReplicateFile replicate_file = 18;
+        GetMetadata get_metadata = 19;
+        SetMetadata set_metadata = 20;
     }
 }
 
@@ -100,6 +102,18 @@ message ReplicateFile {
     optional FileBlock block = 3;
 }
 
+message GetMetadata {
+    required bytes uuid = 1;
+    required bytes type = 2;
+    repeated bytes names = 3;
+}
+
+message SetMetadata {
+    required bytes uuid = 1;
+    required Metadata metadata = 2;
+    repeated bytes names = 3;
+}
+
 // Generic provider response
 message ProviderResponse {
     required Status status = 1;
@@ -114,6 +128,7 @@ message ProviderResponse {
         Dir dir = 8;
         FilePath file_path = 9;
         FileDistribution file_distribution = 10;
+        Metadata metadata = 11;
     }
 }
 
@@ -169,4 +184,9 @@ message ProviderFileDistribution {
 
 message FileDistribution {
     repeated ProviderFileDistribution provider_file_distributions = 1;
+}
+
+message Metadata {
+    required bytes type = 1;
+    required bytes value = 2;
 }
