@@ -45,6 +45,8 @@ message Xattr {
 
 message GetXattr {
     required bytes name = 1;
+    optional bool inherited = 2 [default = false];
+
 }
 
 message SetXattr {
@@ -56,6 +58,7 @@ message RemoveXattr {
 }
 
 message ListXattr {
+    optional bool inherited = 1 [default = false];
 }
 
 message GetParent {
@@ -118,6 +121,7 @@ message Metadata {
 message ReadMetadata {
     required bytes type = 1;
     repeated bytes names = 2;
+    optional bool inherited = 3 [default = false];
 }
 
 message WriteMetadata {
