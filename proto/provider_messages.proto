@@ -35,6 +35,7 @@ message ProviderRequest {
         ReplicateFile replicate_file = 19;
         ReadMetadata read_metadata = 20;
         WriteMetadata write_metadata = 21;
+        CheckPerms check_perms = 22;
     }
 }
 
@@ -127,6 +128,10 @@ message ReadMetadata {
 message WriteMetadata {
     required Metadata metadata = 1;
     repeated bytes names = 2;
+}
+
+message CheckPerms {
+    required FileLocationFlags flags = 1;
 }
 
 // Generic provider response
