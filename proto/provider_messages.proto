@@ -36,6 +36,8 @@ message ProviderRequest {
         ReadMetadata read_metadata = 20;
         WriteMetadata write_metadata = 21;
         CheckPerms check_perms = 22;
+        CreateShare create_share = 23;
+        RemoveShare remove_share = 24;
     }
 }
 
@@ -134,6 +136,12 @@ message CheckPerms {
     required FileLocationFlags flags = 1;
 }
 
+message CreateShare {
+}
+
+message RemoveShare {
+}
+
 // Generic provider response
 message ProviderResponse {
     required Status status = 1;
@@ -149,6 +157,7 @@ message ProviderResponse {
         FilePath file_path = 9;
         FileDistribution file_distribution = 10;
         Metadata metadata = 11;
+        Share share = 12;
     }
 }
 
@@ -179,4 +188,8 @@ message ProviderFileDistribution {
 
 message FileDistribution {
     repeated ProviderFileDistribution provider_file_distributions = 1;
+}
+
+message Share {
+    required bytes uuid = 1;
 }
