@@ -156,6 +156,7 @@ message FileAttr {
     required int64 ctime = 8;
     required FileType type = 9;
     optional int64 size = 10 [default = 0];
+    repeated bytes shares = 11;
 }
 
 message FileChildren {
