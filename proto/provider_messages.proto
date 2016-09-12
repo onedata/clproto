@@ -192,5 +192,6 @@ message FileDistribution {
 }
 
 message Share {
-    required bytes uuid = 1;
+    required bytes share_id = 1;
+    required bytes share_file_uuid = 2;
 }
