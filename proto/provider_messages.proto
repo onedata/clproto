@@ -62,6 +62,7 @@ message RemoveXattr {
 
 message ListXattr {
     optional bool inherited = 1 [default = false];
+    optional bool show_internal = 2 [default = true];
 }
 
 message GetParent {
