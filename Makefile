@@ -1,31 +1,28 @@
-.PHONY: deps
+PROTOCERL := ./_build/default/lib/gpb/bin/protoc-erl
+ifeq ("$(wildcard $(PROTOCERL))","")
+PROTOCERL := ../gpb/bin/protoc-erl
+endif
 
-all: deps compile
+.PHONY: all
+all: priv/messages.nif.so src/messages.erl include/messages.hrl
 
-deps:
-	@./rebar get-deps
+priv/messages.nif.so: build/messages.nif.so
+	mkdir -p priv
+	cp build/messages.nif.so priv/
 
-compile:
-	@./rebar compile
-
-clean:
-	@./rebar clean
-
-distclean: clean
-	@./rebar delete-deps
-
-include/messages.hrl:
-	mkdir -p build priv include
-	if [ -x ./_build/default/lib/gpb/bin/protoc-erl ]; then \
-	    PROTOCERL=./_build/default/lib/gpb/bin/protoc-erl; \
-	else \
-	    PROTOCERL=../gpb/bin/protoc-erl; \
-	fi; \
-	$$PROTOCERL -il -strbin -nif -I`pwd`/proto -o-erl src -o-hrl include -o-nif-cc build `pwd`/proto/messages.proto; \
-
-priv/messages.nif.so: include/messages.hrl
+build/messages.nif.so: build/messages.nif.cc
+	mkdir -p build
 	cd build && LDFLAGS= CFLAGS= CXXFLAGS= cmake .. -GNinja -Wno-dev \
 	    -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="$$ERL_CFLAGS" \
 	    -DCMAKE_POSITION_INDEPENDENT_CODE=On -DBUILD_NIF_LIBS=On
 	cmake --build build --target messages.nif
-	cp build/messages.nif.so priv/
+
+src/messages.erl include/messages.hrl build/messages.nif.cc:
+	mkdir -p build include
+	$(PROTOCERL) -il -strbin -nif -I$(CURDIR)/proto -o-erl src -o-hrl include \
+			     -o-nif-cc build $(CURDIR)/proto/messages.proto
+
+.PHONY: clean
+clean:
+	rm -rf build/ priv/ include/ src/messages.erl
+
