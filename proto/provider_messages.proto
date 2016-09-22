@@ -38,6 +38,7 @@ message ProviderRequest {
         CheckPerms check_perms = 22;
         CreateShare create_share = 23;
         RemoveShare remove_share = 24;
+        RemoveMetadata remove_metadata = 25;
     }
 }
 
@@ -142,6 +143,10 @@ message CreateShare {
 }
 
 message RemoveShare {
+}
+
+message RemoveMetadata {
+    required bytes type = 1;
 }
 
 // Generic provider response
