@@ -6,11 +6,11 @@ endif
 .PHONY: all
 all: priv/messages.nif.so src/messages.erl include/messages.hrl
 
-priv/messages.nif.so: build/messages.nif.so
+priv/messages.nif.so: | build/messages.nif.so
 	mkdir -p priv
 	cp build/messages.nif.so priv/
 
-build/messages.nif.so: build/messages.nif.cc
+build/messages.nif.so: | build/messages.nif.cc
 	mkdir -p build
 	cd build && LDFLAGS= CFLAGS= CXXFLAGS= cmake .. -GNinja -Wno-dev \
 	    -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="$$ERL_CFLAGS" \
