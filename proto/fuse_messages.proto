@@ -157,6 +157,7 @@ message FileAttr {
     required FileType type = 9;
     optional int64 size = 10 [default = 0];
     repeated bytes shares = 11;
+    required bytes provider_id = 12;
 }
 
 message FileChildren {
