@@ -43,7 +43,7 @@ if(BUILD_NIF_LIBS)
   target_link_libraries(messages.nif protobuf)
   set_target_properties(messages.nif PROPERTIES PREFIX "" SUFFIX .so)
 
-  target_include_directories(clproto SYSTEM PRIVATE ${ERLANG_ERTS_INCLUDE_PATH})
+  target_include_directories(messages.nif SYSTEM PRIVATE ${ERLANG_ERTS_INCLUDE_PATH})
 
   if(APPLE)
   set_target_properties(messages.nif PROPERTIES
