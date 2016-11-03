@@ -146,7 +146,7 @@ message FuseResponse {
         HelperParams helper_params = 5;
         StorageTestFile storage_test_file = 6;
         Dir dir = 7;
-        Checksum checksum = 8;
+        SyncResponse sync_response = 8;
         FileRenamed file_renamed = 9;
     }
 }
@@ -199,8 +199,9 @@ message StorageTestFile {
     required bytes        file_content  = 4;
 }
 
-message Checksum {
-    required bytes value = 1;
+message SyncResponse {
+    required bytes checksum = 1;
+    required FileLocation file_location = 2;
 }
 
 message FileRenamed {
