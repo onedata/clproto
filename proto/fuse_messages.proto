@@ -158,6 +158,7 @@ message FuseResponse {
         FileRenamed file_renamed = 9;
         FileCreated file_created = 10;
         FileOpened file_opened = 11;
+        Uuid uuid = 12;
     }
 }
 
@@ -227,4 +228,8 @@ message FileRenamed {
     required bytes new_uuid = 1;
     repeated FileRenamedEntry child_entries = 2; // entries for children of
                                                  // renamed file
+}
+
+message Uuid {
+    required bytes uuid = 1;
 }
