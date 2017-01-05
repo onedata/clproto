@@ -43,7 +43,7 @@ message CreateStorageTestFile {
 
 message VerifyStorageTestFile {
     required bytes storage_id   = 1;
-    required bytes space_uuid   = 2;
+    required bytes space_id     = 2;
     required bytes file_id      = 3;
     required bytes file_content = 4;
 }
@@ -214,7 +214,7 @@ message HelperParams {
 
 message StorageTestFile {
     required HelperParams helper_params = 1;
-    required bytes        space_uuid    = 2;
+    required bytes        space_id      = 2;
     required bytes        file_id       = 3;
     required bytes        file_content  = 4;
 }
