@@ -127,11 +127,11 @@ message ServerMessage {
     optional bytes proxy_session_id = 20;
 }
 
-message ProcessingStatus {
-    enum Code {
-        in_progres = 1;
-        error      = 2; // unknown error
-    }
+enum ProcessingCode {
+    IN_PROGRESS = 1;
+    ERROR       = 2; // unknown error
+}
 
-    required Code code = 1;
+message ProcessingStatus {
+    required ProcessingCode code = 1;
 }
