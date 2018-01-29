@@ -133,6 +133,7 @@ message MakeFile {
 
 message OpenFile {
     required OpenFlag flag = 1 [default = READ_WRITE];
+    optional bool created = 1 [default = false];
 }
 
 message GetFileLocation {
@@ -144,6 +145,7 @@ message Release {
 
 message Truncate {
     required int64 size = 1;
+    optional bool on_storage = 2 [default = true];
 }
 
 message SynchronizeBlock {
@@ -259,6 +261,7 @@ message HelperArg {
 message HelperParams {
     required bytes helper_name = 1;
     repeated HelperArg helper_args = 2;
+    optional bool extended_direct_io = 3 [default = false];
 }
 
 message StorageTestFile {
