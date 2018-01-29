@@ -133,7 +133,7 @@ message MakeFile {
 
 message OpenFile {
     required OpenFlag flag = 1 [default = READ_WRITE];
-    optional bool created = 1 [default = false];
+    optional bool created = 2 [default = false];
 }
 
 message GetFileLocation {
