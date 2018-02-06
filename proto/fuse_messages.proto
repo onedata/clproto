@@ -18,8 +18,8 @@ enum FileType {
 }
 
 enum HelperMode {
-    AUTO = 1;         // automatic helper mode detection
-    FORCE_PROXY = 2;  // return proxy io helper or error
+    AUTO         = 1; // automatic helper mode detection
+    FORCE_PROXY  = 2; // return proxy io helper or error
     FORCE_DIRECT = 3; // return direct io helper or error
 }
 
@@ -39,8 +39,8 @@ message ResolveGuid {
 }
 
 message GetHelperParams {
-    required bytes storage_id   = 1;
-    required bytes file_id      = 2;
+    required bytes storage_id       = 1;
+    required bytes space_id         = 2;
     optional HelperMode helper_mode = 3 [default = AUTO];
 }
 
