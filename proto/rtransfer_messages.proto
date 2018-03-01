@@ -18,3 +18,10 @@ message GenerateRTransferConnSecret {
 message RTransferConnSecret {
     required bytes secret = 1;
 }
+
+message GetRTransferNodesIPs {
+}
+
+message RTransferNodesIPs {
+    repeated IpAndPort nodes = 1;
+}
