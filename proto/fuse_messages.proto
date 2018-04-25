@@ -257,6 +257,7 @@ message FileLocation {
     required bytes storage_id = 4;
     required bytes file_id = 5;
     repeated FileBlock blocks = 6;
+    required uint64 version = 7;
 }
 
 message FileCreated {
