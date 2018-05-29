@@ -250,6 +250,12 @@ message FileChildrenAttrs {
     optional bool is_last = 3;
 }
 
+message FileLocationChanged {
+    required FileLocation file_location = 1;
+    optional uint64 change_offset = 2;
+    optional uint64 change_size = 3;
+}
+
 message FileLocation {
     required bytes uuid = 1;
     required bytes provider_id = 2;

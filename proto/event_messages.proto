@@ -57,6 +57,8 @@ message FileAttrChangedEvent {
 
 message FileLocationChangedEvent {
     required FileLocation file_location = 1;
+    optional uint64 change_offset = 2;
+    optional uint64 change_size = 3;
 }
 
 message FilePermChangedEvent {
