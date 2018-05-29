@@ -218,6 +218,7 @@ message FuseResponse {
         Xattr xattr = 13;
         XattrList xattr_list = 14;
         FileChildrenAttrs file_children_attrs = 15;
+        FileLocationChanged file_location_changed = 16;
     }
 }
 
