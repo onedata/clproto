@@ -121,7 +121,7 @@ message Dir {
 }
 
 message IpAndPort {
-    required bytes ip_string = 1;
+    required bytes ip = 1; // string representation of ip address
     required uint32 port = 2;
 }
 
