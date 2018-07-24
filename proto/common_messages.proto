@@ -120,6 +120,11 @@ message Dir {
     required bytes uuid = 1;
 }
 
+message IpAndPort {
+    required bytes ip = 1; // string representation of ip address
+    required uint32 port = 2;
+}
+
 enum OpenFlag {
     READ = 1;
     WRITE = 2;

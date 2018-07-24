@@ -76,6 +76,7 @@ message ClientMessage {
 
         // rtransfer_messages.proto
         GenerateRTransferConnSecret generate_rtransfer_conn_secret = 24;
+        GetRTransferNodesIPs        get_rtransfer_nodes_ips        = 27;
     }
     
     optional bytes proxy_session_id                                = 25;
@@ -129,6 +130,7 @@ message ServerMessage {
 
         // rtransfer_messages.proto
         RTransferConnSecret      rtransfer_conn_secret     = 20;
+        RTransferNodesIPs        rtransfer_nodes_ips       = 22;
     }
 
     optional bytes proxy_session_id                        = 21;
