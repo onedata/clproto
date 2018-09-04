@@ -86,6 +86,7 @@ message FileRequest {
         GetFileChildrenAttrs get_file_children_attrs = 24;
         StorageFileCreated storage_file_created = 25;
         OpenFileWithExtendedInfo open_file_with_extended_info = 26;
+        BlockSynchronizationRequest block_synchronization_request = 27;
     }
 }
 
@@ -170,6 +171,12 @@ message SynchronizeBlock {
 
 message SynchronizeBlockAndComputeChecksum {
     required FileBlock block = 1;
+    optional bool      prefetch = 2 [default = true];
+    optional int32     priority = 3 [default = 32];
+}
+
+message BlockSynchronizationRequest {
+    required FileBlock block    = 1;
     optional bool      prefetch = 2 [default = true];
     optional int32     priority = 3 [default = 32];
 }
