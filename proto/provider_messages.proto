@@ -87,6 +87,7 @@ message ScheduleFileReplication {
     required bytes target_provider_id = 1;
     optional FileBlock block = 2;
     optional bytes callback = 3;
+    optional bytes index_id = 4;
 }
 
 message ScheduleReplicaInvalidation {
