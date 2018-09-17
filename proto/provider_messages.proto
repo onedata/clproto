@@ -88,6 +88,30 @@ message ScheduleFileReplication {
     optional FileBlock block = 2;
     optional bytes callback = 3;
     optional bytes index_id = 4;
+    optional QueryViewParams query_view_params = 5;
+}
+
+message QueryViewParams {
+    optional bool descending = 1;
+    optional bytes endkey = 2;
+    optional bytes endkey_docid = 3;
+    optional bool full_set = 4;
+    optional bool group = 5;
+    optional uint64 group_level = 6;
+    optional bool inclusive_end = 7;
+    optional bytes key = 8;
+    repeated bytes keys = 9;
+    optional uint64 limit = 10;
+    optional bytes on_error = 11;
+    optional bool reduce = 12;
+    optional bool spatial = 13;
+    optional uint64 skip = 14;
+    optional bytes stale = 15;
+    optional bytes startkey = 16;
+    optional bytes startkey_docid = 17;
+    optional bytes bbox = 18;
+    optional bytes start_range = 19;
+    optional bytes end_range = 20;
 }
 
 message ScheduleReplicaInvalidation {
