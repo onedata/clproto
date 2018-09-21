@@ -83,14 +83,6 @@ message GetFilePath {
 message GetFileDistribution {
 }
 
-message ScheduleFileReplication {
-    required bytes target_provider_id = 1;
-    optional FileBlock block = 2;
-    optional bytes callback = 3;
-    optional bytes index_id = 4;
-    optional QueryParams query_params = 5;
-}
-
 message QueryParams {
     optional bool descending = 1;
     optional bytes endkey = 2;
@@ -113,9 +105,19 @@ message QueryParams {
     optional bytes end_range = 19;
 }
 
+message ScheduleFileReplication {
+    required bytes target_provider_id = 1;
+    optional FileBlock block = 2;
+    optional bytes callback = 3;
+    optional bytes index_id = 4;
+    optional QueryParams query_params = 5;
+}
+
 message ScheduleReplicaInvalidation {
     required bytes source_provider_id = 1;
     required bytes target_provider_id = 2;
+    optional bytes index_id = 3;
+    optional QueryParams query_params = 4;
 }
 
 message Metadata {
