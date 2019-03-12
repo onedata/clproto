@@ -128,7 +128,7 @@ message Metadata {
 message ReadMetadata {
     required bytes type = 1;
     repeated bytes names = 2;
-    optional bool inherited = 3 [default = false];
+    optional bool inherited = 3;
 }
 
 message WriteMetadata {
