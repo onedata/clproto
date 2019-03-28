@@ -40,7 +40,6 @@ message ProviderHandshakeRequest {
 
 message HandshakeResponse {
     required HandshakeStatus status                       = 1;
-    repeated bytes compatible_oneclient_versions          = 2;
 }
 
 message Macaroon {
