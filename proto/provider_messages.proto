@@ -33,9 +33,7 @@ message ProviderRequest {
         ReadMetadata read_metadata = 21;
         WriteMetadata write_metadata = 22;
         CheckPerms check_perms = 23;
-        CreateShare create_share = 24;
-        RemoveShare remove_share = 25;
-        RemoveMetadata remove_metadata = 26;
+        RemoveMetadata remove_metadata = 24;
     }
 }
 
@@ -140,13 +138,6 @@ message CheckPerms {
     required OpenFlag flag = 1;
 }
 
-message CreateShare {
-    required bytes name = 1;
-}
-
-message RemoveShare {
-}
-
 message RemoveMetadata {
     required bytes type = 1;
 }
@@ -164,8 +155,7 @@ message ProviderResponse {
         FilePath file_path = 9;
         FileDistribution file_distribution = 10;
         Metadata metadata = 11;
-        Share share = 12;
-        ScheduledTransfer scheduled_transfer = 13;
+        ScheduledTransfer scheduled_transfer = 12;
     }
 }
 
@@ -192,11 +182,6 @@ message ProviderFileDistribution {
 
 message FileDistribution {
     repeated ProviderFileDistribution provider_file_distributions = 1;
-}
-
-message Share {
-    required bytes share_id = 1;
-    required bytes share_file_uuid = 2;
 }
 
 message ScheduledTransfer {
