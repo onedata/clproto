@@ -16,7 +16,20 @@ file(GLOB PROTO_FILES proto/*.proto)
 
 protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS ${PROTO_FILES})
 
-add_library(clproto OBJECT ${PROTO_SRCS} ${PROTO_HDRS})
+# Fix major/minor GCC macros usage in generated C++ code for clproto
+add_custom_command(
+    OUTPUT dummy.h
+    PRE_BUILD
+    COMMAND sed -i "/protoc_insertion_point(includes)/a #ifdef major\\n#undef major\\n#endif\\n#ifdef minor\\n#undef minor\\n#endif" ${CMAKE_CURRENT_BINARY_DIR}/diagnostic_messages.pb.h && touch dummy.h
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+    DEPENDS ${PROTO_HDRS}
+    VERBATIM
+)
+
+set_source_files_properties("${CMAKE_CURRENT_BINARY_DIR}/diagnostic_messages.pb.h"
+                            PROPERTIES GENERATED TRUE)
+
+add_library(clproto OBJECT ${PROTO_SRCS} ${PROTO_HDRS} dummy.h)
 target_compile_options(clproto PRIVATE -w)
 target_include_directories(clproto SYSTEM PRIVATE ${PROTOBUF_INCLUDE_DIR})
 
