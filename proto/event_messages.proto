@@ -33,6 +33,7 @@ message Event {
         FileRemovedEvent         file_removed          = 6;
         FileRenamedEvent         file_renamed          = 7;
         QuotaExceededEvent       quota_exceeded        = 8;
+        HelperParamsChangedEvent helper_params_changed = 9;
     }
 }
 
@@ -79,6 +80,10 @@ message QuotaExceededEvent {
     repeated bytes spaces = 1; // Blocked spaces
 }
 
+message HelperParamsChangedEvent {
+    required bytes storage_id = 1;
+}
+
 // Generic subscription message
 message Subscription {
     required sint64 id = 1; // unique subscription ID
@@ -91,6 +96,7 @@ message Subscription {
         FileRemovedSubscription         file_removed          = 7;
         FileRenamedSubscription         file_renamed          = 8;
         QuotaExceededSubscription       quota_exceeded        = 9;
+        HelperParamsChangedSubscription helper_params_changed = 10;
     }
 }
 
@@ -120,7 +126,6 @@ message FileLocationChangedSubscription {
                                            // between successive events emission
 }
 
-
 message FilePermChangedSubscription {
     required bytes  file_uuid         = 1; // file UUID
 }
@@ -138,4 +143,8 @@ message QuotaExceededSubscription {
 
 message SubscriptionCancellation {
     required sint64 id = 1; // ID of subscription to be cancelled
+}
+
+message HelperParamsChangedSubscription {
+    required bytes storage_id = 1; // ID of storage handled by helper
 }
