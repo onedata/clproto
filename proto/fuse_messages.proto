@@ -101,6 +101,7 @@ message GetFileChildren {
     required int32 offset = 1;
     required int32 size = 2;
     optional bytes index_token = 3;
+    optional bytes index_startid = 4;
 }
 
 message GetFileChildrenAttrs {
