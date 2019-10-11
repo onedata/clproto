@@ -35,7 +35,7 @@ message ClientHandshakeRequest {
 
 message ProviderHandshakeRequest {
     required bytes provider_id = 1;
-    required bytes nonce       = 2;
+    required bytes token       = 2;
 }
 
 message HandshakeResponse {
