@@ -72,7 +72,7 @@ message ChangesBatch {
     required bytes  space_id        = 1;
     required uint64 since           = 2;
     required uint64 until           = 3;
-    required uint64 until_timestamp = 4;
+    required uint64 timestamp       = 4;
     required bytes  compressed_docs = 5;
 }
 
