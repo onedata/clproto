@@ -125,13 +125,13 @@ message Metadata {
 
 message ReadMetadata {
     required bytes type = 1;
-    repeated bytes names = 2;
+    repeated bytes query = 2;
     optional bool inherited = 3;
 }
 
 message WriteMetadata {
     required Metadata metadata = 1;
-    repeated bytes names = 2;
+    repeated bytes query = 2;
 }
 
 message CheckPerms {
