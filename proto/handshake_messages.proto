@@ -39,10 +39,17 @@ message ProviderHandshakeRequest {
 }
 
 message HandshakeResponse {
-    required HandshakeStatus status                       = 1;
+    required HandshakeStatus status = 1;
+    repeated NodeSpec nodes         = 2;
 }
 
 message Macaroon {
     required bytes macaroon        = 1;
     repeated bytes disch_macaroons = 2;
+}
+
+message NodeSpec {
+    required bytes ip = 1
+    required uint64 key_range_beg = 2;
+    required uint64 key_range_end = 3;
 }
