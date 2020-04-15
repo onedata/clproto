@@ -34,4 +34,11 @@ message Configuration {
     required bytes root_uuid = 1;
     repeated Subscription subscriptions = 2;
     repeated bytes disabled_spaces = 3;
+    repeated NodeSpec nodes = 4;
+}
+
+message NodeSpec {
+    required bytes ip = 1;
+    required uint64 key_range_beg = 2;
+    required uint64 key_range_end = 3;
 }
