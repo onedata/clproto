@@ -25,15 +25,16 @@ message FlushEvents {
 // Generic event message
 message Event {
     oneof type { // list of all event types
-        FileReadEvent            file_read             = 1;
-        FileWrittenEvent         file_written          = 2;
-        FileAttrChangedEvent     file_attr_changed     = 3;
-        FileLocationChangedEvent file_location_changed = 4;
-        FilePermChangedEvent     file_perm_changed     = 5;
-        FileRemovedEvent         file_removed          = 6;
-        FileRenamedEvent         file_renamed          = 7;
-        QuotaExceededEvent       quota_exceeded        = 8;
-        HelperParamsChangedEvent helper_params_changed = 9;
+        FileReadEvent             file_read             = 1;
+        FileWrittenEvent          file_written          = 2;
+        FileAttrChangedEvent      file_attr_changed     = 3;
+        FileLocationChangedEvent  file_location_changed = 4;
+        FilePermChangedEvent      file_perm_changed     = 5;
+        FileRemovedEvent          file_removed          = 6;
+        FileRenamedEvent          file_renamed          = 7;
+        QuotaExceededEvent        quota_exceeded        = 8;
+        HelperParamsChangedEvent  helper_params_changed = 9;
+        ConfigurationChangedEvent configuration_changed = 10;
     }
 }
 
@@ -84,19 +85,24 @@ message HelperParamsChangedEvent {
     required bytes storage_id = 1;
 }
 
+message ConfigurationChangedEvent {
+    required Configuration configuration = 1;
+}
+
 // Generic subscription message
 message Subscription {
     required sint64 id = 1; // unique subscription ID
     oneof type { // list of all subscription types
-        FileReadSubscription            file_read             = 2;
-        FileWrittenSubscription         file_written          = 3;
-        FileAttrChangedSubscription     file_attr_changed     = 4;
-        FileLocationChangedSubscription file_location_changed = 5;
-        FilePermChangedSubscription     file_perm_changed     = 6;
-        FileRemovedSubscription         file_removed          = 7;
-        FileRenamedSubscription         file_renamed          = 8;
-        QuotaExceededSubscription       quota_exceeded        = 9;
-        HelperParamsChangedSubscription helper_params_changed = 10;
+        FileReadSubscription             file_read             = 2;
+        FileWrittenSubscription          file_written          = 3;
+        FileAttrChangedSubscription      file_attr_changed     = 4;
+        FileLocationChangedSubscription  file_location_changed = 5;
+        FilePermChangedSubscription      file_perm_changed     = 6;
+        FileRemovedSubscription          file_removed          = 7;
+        FileRenamedSubscription          file_renamed          = 8;
+        QuotaExceededSubscription        quota_exceeded        = 9;
+        HelperParamsChangedSubscription  helper_params_changed = 10;
+        ConfigurationChangedSubscription configuration_changed = 11;
     }
 }
 
@@ -147,4 +153,7 @@ message SubscriptionCancellation {
 
 message HelperParamsChangedSubscription {
     required bytes storage_id = 1; // ID of storage handled by helper
+}
+
+message ConfigurationChangedSubscription {
 }
