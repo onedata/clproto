@@ -11,6 +11,7 @@ package one.clproto;
 
 import "common_messages.proto";
 import "fuse_messages.proto";
+import "diagnostic_messages.proto";
 
 message Events {
     repeated Event events = 1;
