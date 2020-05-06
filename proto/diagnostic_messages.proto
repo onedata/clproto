@@ -9,7 +9,7 @@
 syntax = "proto2";
 package one.clproto;
 
-import "event_messages.proto";
+import "subscription_messages.proto";
 
 message Ping {
     optional bytes data = 1;
