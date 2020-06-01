@@ -31,11 +31,16 @@ message FuseRequest {
         CreateStorageTestFile create_storage_test_file = 3;
         VerifyStorageTestFile verify_storage_test_file = 4;
         FileRequest file_request = 5;
+        GetFSStats get_fs_stats = 6;
     }
 }
 
 message ResolveGuid {
     required bytes path = 1;
+}
+
+message GetFSStats {
+    required bytes file_id = 1;
 }
 
 message GetHelperParams {
@@ -235,6 +240,7 @@ message FuseResponse {
         FileChildrenAttrs file_children_attrs = 15;
         FileLocationChanged file_location_changed = 16;
         FileOpenedExtended file_opened_extended = 17;
+        FSStats fs_stats = 18;
     }
 }
 
@@ -334,4 +340,15 @@ message Uuid {
 
 message XattrList {
     repeated bytes names = 1;
+}
+
+message StorageStats {
+    required bytes storage_id = 1;
+    required uint64 size = 2;
+    required uint64 occupied = 3;
+}
+
+message FSStats {
+    required bytes space_id = 1;
+    repeated StorageStats storage_stats = 2;
 }
