@@ -97,7 +97,7 @@ message Subscription {
         FileRenamedSubscription         file_renamed            = 8;
         QuotaExceededSubscription       quota_exceeded          = 9;
         HelperParamsChangedSubscription helper_params_changed   = 10;
-        ReplicaStatusChangedSubscription replica_status_changed = 11
+        ReplicaStatusChangedSubscription replica_status_changed = 11;
     }
 }
 
