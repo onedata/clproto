@@ -57,6 +57,7 @@ message DBSyncMessage {
         TreeBroadcast2  tree_broadcast  = 1;
         ChangesBatch    changes_batch   = 2;
         ChangesRequest2 changes_request = 3;
+        CustomChangesRequest custom_changes_request = 4;
     }
 }
 
@@ -69,15 +70,30 @@ message TreeBroadcast2 {
 }
 
 message ChangesBatch {
-    required bytes  space_id        = 1;
-    required uint64 since           = 2;
-    required uint64 until           = 3;
-    required uint64 timestamp       = 4;
-    required bytes  compressed_docs = 5;
+    required bytes  space_id                = 1;
+    required uint64 since                   = 2;
+    required uint64 until                   = 3;
+    required uint64 timestamp               = 4;
+    required bytes compressed_docs          = 5;
+    required bytes reference_provider_id    = 6;
+    required bytes custom_request_extension = 7;
 }
 
 message ChangesRequest2 {
     required bytes  space_id = 1;
     required uint64 since    = 2;
     required uint64 until    = 3;
+}
+
+message CustomChangesRequest {
+    enum MutatorsToInclude {
+        reference_provider = 1;
+        all_providers      = 2;
+    }
+
+    required bytes  space_id = 1;
+    required uint64 since    = 2;
+    required uint64 until    = 3;
+    required bytes reference_provider_id = 4;
+    required MutatorsToInclude include_mutators = 5;
 }
