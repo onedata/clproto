@@ -75,7 +75,7 @@ message ChangesBatch {
     required uint64 until                   = 3;
     required uint64 timestamp               = 4;
     required bytes compressed_docs          = 5;
-    required bytes reference_provider_id    = 6;
+    required bytes mutator_id               = 6;
     required bytes custom_request_extension = 7;
 }
 
@@ -91,9 +91,9 @@ message CustomChangesRequest {
         all_providers      = 2;
     }
 
-    required bytes  space_id = 1;
-    required uint64 since    = 2;
-    required uint64 until    = 3;
-    required bytes reference_provider_id = 4;
+    required bytes  space_id                    = 1;
+    required uint64 since                       = 2;
+    required uint64 until                       = 3;
+    required bytes mutator_id                   = 4;
     required MutatorsToInclude include_mutators = 5;
 }
