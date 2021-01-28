@@ -87,8 +87,8 @@ message ChangesRequest2 {
 
 message CustomChangesRequest {
     enum MutatorsToInclude {
-        reference_provider = 1;
-        all_providers      = 2;
+        single_provider = 1;
+        all_providers   = 2;
     }
 
     required bytes  space_id                    = 1;
