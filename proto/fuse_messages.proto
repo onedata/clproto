@@ -121,6 +121,7 @@ message GetFileChildrenAttrs {
     required int32 size = 2;
     optional bytes index_token = 3;
     optional bool include_replication_status = 4;
+    optional bool include_link_count = 5;
 }
 
 message CreateDir {
