@@ -100,11 +100,13 @@ message FileRequest {
 
 message GetFileAttr {
     optional bool include_replication_status = 1;
+    optional bool include_link_count = 2;
 }
 
 message GetChildAttr {
     required bytes name = 1;
     optional bool include_replication_status = 2;
+    optional bool include_link_count = 3;
 }
 
 message GetFileChildren {
@@ -281,6 +283,7 @@ message FileAttr {
     required bytes owner_id = 13;
     optional bytes parent_uuid = 14;
     optional bool fully_replicated = 15;
+    optional int32 nlink = 16;
 }
 
 message FileChildren {
