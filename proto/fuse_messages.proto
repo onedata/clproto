@@ -14,7 +14,8 @@ import "common_messages.proto";
 enum FileType {
     REG = 1; // regular file
     DIR = 2; // directory
-    LNK = 3; // symbolic link
+    LNK = 3; // hard link
+    SYMLNK = 4; // symbolic link
 }
 
 enum HelperMode {
