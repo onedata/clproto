@@ -93,8 +93,8 @@ message FileRequest {
         OpenFileWithExtendedInfo open_file_with_extended_info = 25;
         BlockSynchronizationRequest block_synchronization_request = 26;
         MakeLink make_link = 27;
-        MakeSymLink make_symlink = 28;
-        ReadSymLink read_symlink = 29;
+        MakeSymlink make_symlink = 28;
+        ReadSymlink read_symlink = 29;
     }
 }
 
@@ -234,12 +234,12 @@ message MakeLink {
     required bytes target_name = 2;
 }
 
-message MakeSymLink {
+message MakeSymlink {
     required bytes target_name = 1;
     required bytes link = 2;
 }
 
-message ReadSymLink {
+message ReadSymlink {
 }
 
 // Generic FUSE client response
@@ -264,7 +264,7 @@ message FuseResponse {
         FileLocationChanged file_location_changed = 16;
         FileOpenedExtended file_opened_extended = 17;
         FSStats fs_stats = 18;
-        SymLink symlink = 19;
+        Symlink symlink = 19;
     }
 }
 
@@ -379,6 +379,6 @@ message FSStats {
     repeated StorageStats storage_stats = 2;
 }
 
-message SymLink {
+message Symlink {
     required bytes link = 1;
 }
