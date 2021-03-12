@@ -81,7 +81,7 @@ message ClientMessage {
     
     optional bytes proxy_session_id                                = 25;
     optional Macaroon proxy_session_macaroon                       = 26;
-    optional SessionMode session_mode                              = 28;
+    optional SessionMode proxy_session_mode                        = 28;
 }
 
 // Messages that can be sent by the server to the client.
