@@ -26,11 +26,17 @@ enum HandshakeStatus {
     INTERNAL_SERVER_ERROR            = 13;
 }
 
+enum SessionMode {
+    NORMAL      = 1;
+    OPEN_HANDLE = 2;
+}
+
 message ClientHandshakeRequest {
     optional bytes session_id                      = 1;
     optional Macaroon macaroon                     = 2;
     required bytes version                         = 3;
     repeated bytes compatible_oneprovider_versions = 4;
+    required SessionMode session_mode              = 5;
 }
 
 message ProviderHandshakeRequest {
