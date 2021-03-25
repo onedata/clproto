@@ -14,7 +14,8 @@ import "common_messages.proto";
 enum FileType {
     REG = 1; // regular file
     DIR = 2; // directory
-    LNK = 3; // symbolic link
+    LNK = 3; // hard link
+    SYMLNK = 4; // symbolic link
 }
 
 enum HelperMode {
@@ -91,16 +92,21 @@ message FileRequest {
         StorageFileCreated storage_file_created = 24;
         OpenFileWithExtendedInfo open_file_with_extended_info = 25;
         BlockSynchronizationRequest block_synchronization_request = 26;
+        MakeLink make_link = 27;
+        MakeSymlink make_symlink = 28;
+        ReadSymlink read_symlink = 29;
     }
 }
 
 message GetFileAttr {
     optional bool include_replication_status = 1;
+    optional bool include_link_count = 2;
 }
 
 message GetChildAttr {
     required bytes name = 1;
     optional bool include_replication_status = 2;
+    optional bool include_link_count = 3;
 }
 
 message GetFileChildren {
@@ -115,6 +121,7 @@ message GetFileChildrenAttrs {
     required int32 size = 2;
     optional bytes index_token = 3;
     optional bool include_replication_status = 4;
+    optional bool include_link_count = 5;
 }
 
 message CreateDir {
@@ -222,6 +229,19 @@ message FSync {
 message StorageFileCreated {
 }
 
+message MakeLink {
+    required bytes target_parent_uuid = 1;
+    required bytes target_name = 2;
+}
+
+message MakeSymlink {
+    required bytes target_name = 1;
+    required bytes link = 2;
+}
+
+message ReadSymlink {
+}
+
 // Generic FUSE client response
 message FuseResponse {
     required Status status = 1;
@@ -244,6 +264,7 @@ message FuseResponse {
         FileLocationChanged file_location_changed = 16;
         FileOpenedExtended file_opened_extended = 17;
         FSStats fs_stats = 18;
+        Symlink symlink = 19;
     }
 }
 
@@ -263,6 +284,7 @@ message FileAttr {
     required bytes owner_id = 13;
     optional bytes parent_uuid = 14;
     optional bool fully_replicated = 15;
+    optional int32 nlink = 16;
 }
 
 message FileChildren {
@@ -355,4 +377,8 @@ message StorageStats {
 message FSStats {
     required bytes space_id = 1;
     repeated StorageStats storage_stats = 2;
+}
+
+message Symlink {
+    required bytes link = 1;
 }
