@@ -16,7 +16,8 @@
     {registered, []},
     {applications, [
         kernel,
-        stdlib
+        stdlib,
+        gpb
     ]},
     {env, []}
 ]}.
