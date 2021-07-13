@@ -6,6 +6,9 @@ endif
 .PHONY: all
 all: priv/messages.nif.so src/messages.erl include/messages.hrl
 
+compile:
+	@./rebar3 compile
+
 priv/messages.nif.so: | build/messages.nif.so
 	mkdir -p priv
 	cp build/messages.nif.so priv/
