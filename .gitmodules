@@ -1,0 +1,2 @@
+# Do not add any submodules to clproto, as it will cause problems with building
+# Oneclient packages (git archive is not handling it well)
