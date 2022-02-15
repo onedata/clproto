@@ -28,8 +28,6 @@ message ProviderRequest {
         SetMimetype set_mimetype = 15;
         GetFilePath get_file_path = 16;
         GetFileDistribution get_file_distribution = 18;
-        ScheduleFileReplication schedule_file_replication = 19;
-        ScheduleReplicaInvalidation schedule_replica_invalidation = 20;
         ReadMetadata read_metadata = 21;
         WriteMetadata write_metadata = 22;
         CheckPerms check_perms = 23;
@@ -81,43 +79,6 @@ message GetFilePath {
 message GetFileDistribution {
 }
 
-message QueryParams {
-    optional bool descending = 1;
-    optional bytes endkey = 2;
-    optional bytes endkey_docid = 3;
-    optional bool full_set = 4;
-    optional bool group = 5;
-    optional uint64 group_level = 6;
-    optional bool inclusive_end = 7;
-    optional bytes key = 8;
-    optional uint64 limit = 9;
-    optional bytes on_error = 10;
-    optional bool reduce = 11;
-    optional bool spatial = 12;
-    optional uint64 skip = 13;
-    optional bytes stale = 14;
-    optional bytes startkey = 15;
-    optional bytes startkey_docid = 16;
-    optional bytes bbox = 17;
-    optional bytes start_range = 18;
-    optional bytes end_range = 19;
-}
-
-message ScheduleFileReplication {
-    required bytes target_provider_id = 1;
-    optional FileBlock block = 2;
-    optional bytes callback = 3;
-    optional bytes index_name = 4;
-    optional QueryParams query_params = 5;
-}
-
-message ScheduleReplicaInvalidation {
-    required bytes source_provider_id = 1;
-    required bytes target_provider_id = 2;
-    optional bytes index_name = 3;
-    optional QueryParams query_params = 4;
-}
-
 message Metadata {
     required bytes type = 1;
     required bytes value = 2;
@@ -155,7 +116,6 @@ message ProviderResponse {
         FilePath file_path = 9;
         FileDistribution file_distribution = 10;
         Metadata metadata = 11;
-        ScheduledTransfer scheduled_transfer = 12;
     }
 }
 
@@ -182,8 +142,4 @@ message ProviderFileDistribution {
 
 message FileDistribution {
     repeated ProviderFileDistribution provider_file_distributions = 1;
-}
-
-message ScheduledTransfer {
-    required bytes transfer_id = 1;
 }
