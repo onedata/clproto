@@ -105,7 +105,7 @@ message RemoveMetadata {
 }
 
 message BrowseDirStats {
-    required bytes request = 1;
+    required bytes serialized_request = 1;
 }
 
 // Generic provider response
@@ -151,5 +151,5 @@ message FileDistribution {
 }
 
 message DirStatsResponse {
-    required bytes response = 1;
+    required bytes serialized_response = 1;
 }
