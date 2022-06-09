@@ -32,7 +32,8 @@ message ProviderRequest {
         WriteMetadata write_metadata = 22;
         CheckPerms check_perms = 23;
         RemoveMetadata remove_metadata = 24;
-        BrowseDirStats browse_dir_stats = 25;
+        BrowseTimeDirStats browse_time_dir_stats = 25;
+        BrowseCurrentDirStats browse_current_dir_stats = 26;
     }
 }
 
@@ -104,8 +105,12 @@ message RemoveMetadata {
     required bytes type = 1;
 }
 
-message BrowseDirStats {
+message BrowseTimeDirStats {
     required bytes serialized_request = 1;
+}
+
+message BrowseCurrentDirStats {
+    repeated bytes stat_names = 1;
 }
 
 // Generic provider response
@@ -121,7 +126,8 @@ message ProviderResponse {
         FilePath file_path = 9;
         FileDistribution file_distribution = 10;
         Metadata metadata = 11;
-        DirStatsResponse dir_stats_response = 12;
+        DirTimeStatsResponse dir_time_stats_response = 12;
+        DirCurrentStatsResponse dir_current_stats_response = 13;
     }
 }
 
@@ -141,15 +147,20 @@ message FilePath {
     required bytes value = 1;
 }
 
-message ProviderFileDistribution {
-    required bytes provider_id = 1;
+message StorageFileDistribution {
+    required bytes storage_id = 1;
     repeated FileBlock blocks = 2;
 }
 
 message FileDistribution {
-    repeated ProviderFileDistribution provider_file_distributions = 1;
+    required uint64 logical_size = 1;
+    repeated StorageFileDistribution blocks_per_storage  = 2;
 }
 
-message DirStatsResponse {
+message DirTimeStatsResponse {
     required bytes serialized_response = 1;
+}
+
+message DirCurrentStatsResponse {
+    required bytes encoded_response = 1;
 }
