@@ -10,6 +10,7 @@ syntax = "proto2";
 package one.clproto;
 
 import "common_messages.proto";
+import "time_series_messages.proto";
 
 // Generic provider request
 message ProviderRequest {
@@ -105,13 +106,6 @@ message RemoveMetadata {
     required bytes type = 1;
 }
 
-message BrowseTimeDirStats {
-    required bytes serialized_request = 1;
-}
-
-message BrowseCurrentDirStats {
-    repeated bytes stat_names = 1;
-}
 
 // Generic provider response
 message ProviderResponse {
@@ -155,12 +149,4 @@ message StorageFileDistribution {
 message FileDistribution {
     required uint64 logical_size = 1;
     repeated StorageFileDistribution blocks_per_storage  = 2;
-}
-
-message DirTimeStatsResponse {
-    required bytes serialized_response = 1;
-}
-
-message DirCurrentStatsResponse {
-    required bytes encoded_response = 1;
 }
