@@ -10,7 +10,6 @@ syntax = "proto2";
 package one.clproto;
 
 import "common_messages.proto";
-import "time_series_messages.proto";
 
 // Generic provider request
 message ProviderRequest {
@@ -33,8 +32,6 @@ message ProviderRequest {
         WriteMetadata write_metadata = 22;
         CheckPerms check_perms = 23;
         RemoveMetadata remove_metadata = 24;
-        BrowseTimeDirStats browse_time_dir_stats = 25;
-        BrowseCurrentDirStats browse_current_dir_stats = 26;
     }
 }
 
@@ -118,10 +115,8 @@ message ProviderResponse {
         Acl acl = 7;
         Dir dir = 8;
         FilePath file_path = 9;
-        FileDistribution file_distribution = 10;
+        FileDistributionSummary file_distribution = 10;
         Metadata metadata = 11;
-        DirTimeStatsResponse dir_time_stats_response = 12;
-        DirCurrentStatsResponse dir_current_stats_response = 13;
     }
 }
 
@@ -141,12 +136,11 @@ message FilePath {
     required bytes value = 1;
 }
 
-message StorageFileDistribution {
-    required bytes storage_id = 1;
+message ProviderDistributionSummary {
+    required bytes provider_id = 1;
     repeated FileBlock blocks = 2;
 }
 
-message FileDistribution {
-    required uint64 logical_size = 1;
-    repeated StorageFileDistribution blocks_per_storage  = 2;
+message FileDistributionSummary {
+    repeated ProviderDistributionSummary provider_file_distributions = 1;
 }

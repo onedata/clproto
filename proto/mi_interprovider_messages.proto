@@ -1,0 +1,84 @@
+/**
+ * Messages used in middleware communication between providers.
+ * @author Michal Stanisz
+ * @copyright (C) 2022 ACK CYFRONET AGH
+ * @copyright This software is released under the MIT license cited in
+ * 'LICENSE.txt'
+ */
+
+syntax = "proto2";
+package one.clproto;
+
+import "common_messages.proto";
+
+// Generic middleware interprovider request
+message MiInterproviderRequest {
+    required bytes file_guid = 1;
+    oneof operation {
+        BrowseLocalCurrentDirSizeStats browse_local_current_dir_size_stats = 2;
+        BrowseLocalTimeDirSizeStats browse_local_time_dir_size_stats = 3;
+        LocalRegFileDistributionGetRequest local_reg_file_distribution_get_request = 4;
+    }
+}
+
+message BrowseLocalCurrentDirSizeStats {
+    repeated bytes stat_names = 1;
+}
+
+message BrowseLocalTimeDirSizeStats {
+    oneof request {
+        TimeSeriesGetLayoutRequest time_series_get_layout_request = 1;
+        TimeSeriesGetSliceRequest time_series_get_slice_request = 2;
+    }
+}
+
+message TimeSeriesGetLayoutRequest {
+}
+
+message TimeSeriesGetSliceRequest {
+    required bytes encoded_layout = 1;
+    optional uint64 start_timestamp = 2;
+    optional uint64 window_limit = 3;
+}
+
+message LocalRegFileDistributionGetRequest {
+}
+
+
+// Generic middleware interprovider response
+message MiInterproviderResponse {
+    enum Status {
+        ok      = 1;
+        error   = 2;
+    }
+    required Status status = 1;
+    oneof result {
+        bytes error_json = 2;
+        TimeSeriesLayoutResult time_series_layout_result = 3;
+        TimeSeriesSliceResult time_series_slice_result = 4;
+        LocalCurrentDirSizeStats local_current_dir_size_stats = 5;
+        ProviderRegDistribution provider_reg_distribution = 6;
+    }
+}
+
+message LocalCurrentDirSizeStats {
+    required bytes stats_as_json = 1;
+}
+
+message TimeSeriesLayoutResult {
+    required bytes layout_as_json = 1;
+}
+
+message TimeSeriesSliceResult {
+    required bytes serialized_slice = 1;
+}
+
+message StorageRegDistribution {
+    required bytes storage_id = 1;
+    repeated FileBlock blocks = 2;
+}
+
+message ProviderRegDistribution {
+    required uint64 logical_size = 1;
+    repeated StorageRegDistribution blocks_per_storage = 2;
+}
