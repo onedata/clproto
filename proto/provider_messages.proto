@@ -27,7 +27,6 @@ message ProviderRequest {
         GetMimetype get_mimetype = 14;
         SetMimetype set_mimetype = 15;
         GetFilePath get_file_path = 16;
-        GetFileDistribution get_file_distribution = 18;
         ReadMetadata read_metadata = 21;
         WriteMetadata write_metadata = 22;
         CheckPerms check_perms = 23;
@@ -76,9 +75,6 @@ message SetMimetype {
 message GetFilePath {
 }
 
-message GetFileDistribution {
-}
-
 message Metadata {
     required bytes type = 1;
     required bytes value = 2;
@@ -115,7 +111,6 @@ message ProviderResponse {
         Acl acl = 7;
         Dir dir = 8;
         FilePath file_path = 9;
-        FileDistributionSummary file_distribution = 10;
         Metadata metadata = 11;
     }
 }
@@ -136,11 +131,3 @@ message FilePath {
     required bytes value = 1;
 }
 
-message ProviderDistributionSummary {
-    required bytes provider_id = 1;
-    repeated FileBlock blocks = 2;
-}
-
-message FileDistributionSummary {
-    repeated ProviderDistributionSummary provider_file_distributions = 1;
-}

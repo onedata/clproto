@@ -1,0 +1,68 @@
+/**
+ * Messages used in rpc communication between providers.
+ * @author Michal Stanisz
+ * @copyright (C) 2022 ACK CYFRONET AGH
+ * @copyright This software is released under the MIT license cited in
+ * 'LICENSE.txt'
+ */
+
+syntax = "proto2";
+package one.clproto;
+
+import "common_messages.proto";
+import "time_series_messages.proto";
+
+// Generic provider RPC request
+message ProviderRpcRequest {
+    required bytes file_guid = 1;
+    oneof operation {
+        ProviderCurrentDirSizeStatsBrowseRequest provider_current_dir_size_stats_browse_request  = 2;
+        ProviderHistoricalDirSizeStatsBrowseRequest provider_historical_dir_size_stats_browse_request  = 3;
+        ProviderRegDistributionGetRequest provider_reg_distribution_get_request = 4;
+    }
+}
+
+message ProviderCurrentDirSizeStatsBrowseRequest {
+    repeated bytes stat_names = 1;
+}
+
+message ProviderHistoricalDirSizeStatsBrowseRequest {
+    oneof request {
+        TimeSeriesLayoutGetRequest time_series_layout_get_request = 1;
+        TimeSeriesSliceGetRequest time_series_slice_get_request = 2;
+    }
+}
+
+message ProviderRegDistributionGetRequest {
+}
+
+
+// Generic provider RPC result
+message ProviderRpcResult {
+    enum Status {
+        ok      = 1;
+        error   = 2;
+    }
+    required Status status = 1;
+    oneof result {
+        bytes error_json = 2;
+        ProviderCurrentDirSizeStatsBrowseResult provider_current_dir_size_stats_browse_result = 3;
+        TimeSeriesLayoutGetResult time_series_layout_get_result = 4;
+        TimeSeriesSliceGetResult time_series_slice_get_result = 5;
+        ProviderRegDistributionGetResult provider_reg_distribution_get_result = 6;
+    }
+}
+
+message ProviderCurrentDirSizeStatsBrowseResult {
+    required bytes stats_as_json = 1;
+}
+
+message StorageRegDistributionGetResult {
+    required bytes storage_id = 1;
+    repeated FileBlock blocks = 2;
+}
+
+message ProviderRegDistributionGetResult {
+    required uint64 logical_size = 1;
+    repeated StorageRegDistributionGetResult distribution_per_storage = 2;
+}
