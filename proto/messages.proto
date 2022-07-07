@@ -81,7 +81,7 @@ message ClientMessage {
         CloseSession                close_session                  = 29;
 
         // provider_rpc_messages.proto
-        ProviderRpcRequest          provider_rpc_request           = 30;
+        ProviderRpcCall             provider_rpc_call              = 30;
     }
     
     optional bytes proxy_session_id                                = 25;
@@ -139,7 +139,7 @@ message ServerMessage {
         RTransferNodesIPs        rtransfer_nodes_ips       = 22;
         
         // provider_rpc_messages.proto
-        ProviderRpcResult        provider_rpc_result       = 23; 
+        ProviderRpcResponse      provider_rpc_response     = 23; 
     }
 
     optional bytes proxy_session_id                        = 21;

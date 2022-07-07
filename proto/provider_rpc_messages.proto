@@ -12,8 +12,8 @@ package one.clproto;
 import "common_messages.proto";
 import "time_series_messages.proto";
 
-// Generic provider RPC request
-message ProviderRpcRequest {
+// Generic provider RPC call
+message ProviderRpcCall {
     required bytes file_guid = 1;
     oneof operation {
         ProviderCurrentDirSizeStatsBrowseRequest provider_current_dir_size_stats_browse_request  = 2;
@@ -37,8 +37,8 @@ message ProviderRegDistributionGetRequest {
 }
 
 
-// Generic provider RPC result
-message ProviderRpcResult {
+// Generic provider RPC response
+message ProviderRpcResponse {
     enum Status {
         ok      = 1;
         error   = 2;
