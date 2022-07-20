@@ -1,0 +1,27 @@
+/**
+ * Messages concerning time series.
+ * @author Michal Stanisz
+ * @copyright (C) 2022 ACK CYFRONET AGH
+ * @copyright This software is released under the MIT license cited in
+ * 'LICENSE.txt'
+ */
+
+syntax = "proto2";
+package one.clproto;
+
+message TimeSeriesLayoutGetRequest {
+}
+
+message TimeSeriesSliceGetRequest {
+    required bytes layout_as_json = 1;
+    optional uint64 start_timestamp = 2;
+    optional uint64 window_limit = 3;
+}
+
+message TimeSeriesLayoutGetResult {
+    required bytes layout_as_json = 1;
+}
+
+message TimeSeriesSliceGetResult {
+    required bytes slice_as_json = 1;
+}

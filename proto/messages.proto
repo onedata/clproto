@@ -19,6 +19,7 @@ import "handshake_messages.proto";
 import "diagnostic_messages.proto";
 import "proxyio_messages.proto";
 import "dbsync_messages.proto";
+import "provider_rpc_messages.proto"; 
 import "provider_messages.proto";
 import "remote_driver_messages.proto";
 import "rtransfer_messages.proto";
@@ -78,6 +79,9 @@ message ClientMessage {
         GenerateRTransferConnSecret generate_rtransfer_conn_secret = 24;
         GetRTransferNodesIPs        get_rtransfer_nodes_ips        = 27;
         CloseSession                close_session                  = 29;
+
+        // provider_rpc_messages.proto
+        ProviderRpcCall             provider_rpc_call              = 30;
     }
     
     optional bytes proxy_session_id                                = 25;
@@ -133,6 +137,9 @@ message ServerMessage {
         // rtransfer_messages.proto
         RTransferConnSecret      rtransfer_conn_secret     = 20;
         RTransferNodesIPs        rtransfer_nodes_ips       = 22;
+        
+        // provider_rpc_messages.proto
+        ProviderRpcResponse      provider_rpc_response     = 23; 
     }
 
     optional bytes proxy_session_id                        = 21;
