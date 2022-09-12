@@ -33,7 +33,68 @@ message FuseRequest {
         VerifyStorageTestFile verify_storage_test_file = 4;
         FileRequest file_request = 5;
         GetFSStats get_fs_stats = 6;
+        CreateMultipartUpload create_multipart_upload = 7;
+        UploadMultipartPart upload_multipart_part = 8;
+        ListMultipartParts list_multipart_parts = 9;
+        CancelMultipartUpload cancel_multipart_upload = 10;
+        CompleteMultipartUpload complete_multipart_upload = 11;
     }
+}
+
+message MultipartUpload {
+    required bytes multipart_upload_id = 1;
+}
+
+// Sender: Oneclient
+// Response: MultipartUpload
+// Creates a record in the database representing a new multipart upload for specific space and path.
+// Multiple multipart uploads can exist for the same path.
+message CreateMultipartUpload {
+    required bytes space_id = 1;
+    required bytes path = 2;
+}
+
+message MultipartPart {
+    required uint32 number = 1;
+    required uint64 size = 2;
+    required bytes etag = 3;
+    required bytes last_modified = 4;
+}
+
+message MultipartParts {
+    repeated MultipartPart parts = 1;
+    required bool is_complete = 2;
+}
+
+// Sender: Oneclient
+// Response: Status[ok]
+// Registers a new multipart upload part in the database. If the part with the same number is already registered
+// under the same multipart upload id, it must be overriden by this message.
+// Returns EINVAL if the multipart_upload_id is invalid or multipart upload is already completed or canceled.
+message UploadMultipartPart {
+    required bytes multipart_upload_id = 1;
+    required MultipartPart part = 2;
+}
+
+// Sender: Oneclient
+// Response: MultipartParts
+// Returns EINVAL if the multipart_upload_id is invalid or multipart upload is already completed or canceled.
+message ListMultipartParts {
+    required bytes multipart_upload_id = 1;
+}
+
+// Sender: Oneclient
+// Response: Status
+// Returns EINVAL if the multipart_upload_id is invalid or multipart upload is already completed or canceled.
+message CompleteMultipartUpload {
+    required bytes multipart_upload_id = 1;
+}
+
+// Sender: Oneclient
+// Response: Status
+// Returns EINVAL if the multipart_upload_id is invalid or multipart upload is already completed or canceled.
+message CancelMultipartUpload {
+    required bytes multipart_upload_id = 1;
 }
 
 message ResolveGuid {
@@ -95,6 +156,11 @@ message FileRequest {
         MakeLink make_link = 27;
         MakeSymlink make_symlink = 28;
         ReadSymlink read_symlink = 29;
+        GetFileAttrByPath get_file_attr_by_path = 30;
+        CreateDirs create_dirs = 31;
+        FileWrittenRange file_written_range = 32;
+        FileReadRange file_read_range = 33;
+        ListFiles list_files = 34;
     }
 }
 
@@ -265,6 +331,9 @@ message FuseResponse {
         FileOpenedExtended file_opened_extended = 17;
         FSStats fs_stats = 18;
         Symlink symlink = 19;
+        MultipartUpload multipart_upload = 20;
+        MultipartParts multipart_parts = 21;
+        FilesList files_list = 22;
     }
 }
 
@@ -285,6 +354,7 @@ message FileAttr {
     optional bytes parent_uuid = 14;
     optional bool fully_replicated = 15;
     optional uint32 nlink = 16;
+    optional bytes etag = 17;
 }
 
 message FileChildren {
@@ -382,3 +452,53 @@ message FSStats {
 message Symlink {
     required bytes link = 1;
 }
+
+
+// Sender: Oneclient
+// Response: FileAttr
+// Returns attr of the file pointed by the path within space or directory determined by context_guid
+// or error
+message GetFileAttrByPath {
+    required bytes path = 1;
+}
+
+// Sender: Oneclient
+// Response: FileAttr
+// If path already exists, it returns the FileAttr of the last directory on the path
+// If path already exists and points to a file, returns ENOTDIR
+// If path doesn't exist, it creates all directories necessary and returns new FileAttr
+message CreateDirs {
+    required bytes path = 1;
+}
+
+// Sender: Oneclient
+// Response: Status[ok]
+message FileWrittenRange {
+    required uint64 offset = 1;
+    required uint64 size = 2;
+}
+
+// Sender: Oneclient
+// Response: Status[ok]
+message FileReadRange {
+    required uint64 offset = 1;
+    required uint64 size = 2;
+}
+
+message FilesList {
+    repeated FileAttr files = 1;
+    optional bool is_last = 2;
+    optional bytes next_page_token = 3;
+}
+
+// Sender: Oneclient
+// Response: FilesList
+// Recursively lists non-directory files (i.e regular files, symbolic links and hardlinks) in directory specified by context_guid (listing root).
+// Files are listed in lexicographical order by their paths, which are relative to the listing root directory.
+message ListFiles {
+    optional bytes token = 2;
+    optional bytes start_after = 3;
+    optional bytes prefix = 4;
+    optional uint32 limit = 5;
+}
+
