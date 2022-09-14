@@ -33,16 +33,42 @@ message FuseRequest {
         VerifyStorageTestFile verify_storage_test_file = 4;
         FileRequest file_request = 5;
         GetFSStats get_fs_stats = 6;
-        CreateMultipartUpload create_multipart_upload = 7;
-        UploadMultipartPart upload_multipart_part = 8;
-        ListMultipartParts list_multipart_parts = 9;
-        CancelMultipartUpload cancel_multipart_upload = 10;
-        CompleteMultipartUpload complete_multipart_upload = 11;
+        MultipartUploadRequest multipart_upload_request = 7;
     }
+}
+
+message MultipartUploadRequest {
+    oneof multipart_request {
+        CreateMultipartUpload create_multipart_upload = 1;
+        UploadMultipartPart upload_multipart_part = 2;
+        ListMultipartParts list_multipart_parts = 3;
+        AbortMultipartUpload abort_multipart_upload = 4;
+        CompleteMultipartUpload complete_multipart_upload = 5;
+        ListMultipartUploads list_multipart_uploads = 6;
+    }
+}
+
+// Sender: Oneclient
+// Response: MultipartUploads
+// Returns the list of ongoing multipart uploads of current user. The results must be
+// paged and ordered by key path and then creation time (multiple uploads can exist for
+// the same path).
+message ListMultipartUploads {
+    required bytes space_id = 1;
+    optional uint32 max_uploads = 2; // default 1000
+    optional bytes index_token = 3;
 }
 
 message MultipartUpload {
     required bytes multipart_upload_id = 1;
+    required bytes path = 2;
+    required uint64 timestamp = 3;
+}
+
+message MultipartUploads {
+    repeated MultipartUpload uploads = 1;
+    optional bool is_last = 2;
+    optional bytes index_token = 3;
 }
 
 // Sender: Oneclient
@@ -58,12 +84,13 @@ message MultipartPart {
     required uint32 number = 1;
     required uint64 size = 2;
     required bytes etag = 3;
-    required bytes last_modified = 4;
+    required uint64 last_modified = 4;
 }
 
 message MultipartParts {
     repeated MultipartPart parts = 1;
-    required bool is_complete = 2;
+    optional int64 next_part_marker = 3;
+    optional bool is_last = 4;
 }
 
 // Sender: Oneclient
@@ -81,6 +108,8 @@ message UploadMultipartPart {
 // Returns EINVAL if the multipart_upload_id is invalid or multipart upload is already completed or canceled.
 message ListMultipartParts {
     required bytes multipart_upload_id = 1;
+    optional int32 max_parts = 2; // default 1000
+    optional int64 part_marker = 3;
 }
 
 // Sender: Oneclient
@@ -93,7 +122,7 @@ message CompleteMultipartUpload {
 // Sender: Oneclient
 // Response: Status
 // Returns EINVAL if the multipart_upload_id is invalid or multipart upload is already completed or canceled.
-message CancelMultipartUpload {
+message AbortMultipartUpload {
     required bytes multipart_upload_id = 1;
 }
 
@@ -157,7 +186,7 @@ message FileRequest {
         MakeSymlink make_symlink = 28;
         ReadSymlink read_symlink = 29;
         GetFileAttrByPath get_file_attr_by_path = 30;
-        CreateDirs create_dirs = 31;
+        CreateDirAtPath create_dir_at_path = 31;
         FileWrittenRange file_written_range = 32;
         FileReadRange file_read_range = 33;
         ListFiles list_files = 34;
@@ -331,9 +360,10 @@ message FuseResponse {
         FileOpenedExtended file_opened_extended = 17;
         FSStats fs_stats = 18;
         Symlink symlink = 19;
-        MultipartUpload multipart_upload = 20;
-        MultipartParts multipart_parts = 21;
-        FilesList files_list = 22;
+        MultipartParts multipart_parts = 20;
+        MultipartUpload multipart_upload = 21;
+        MultipartUploads multipart_uploads = 22;
+        FilesList files_list = 23;
     }
 }
 
@@ -354,7 +384,6 @@ message FileAttr {
     optional bytes parent_uuid = 14;
     optional bool fully_replicated = 15;
     optional uint32 nlink = 16;
-    optional bytes etag = 17;
 }
 
 message FileChildren {
@@ -453,7 +482,6 @@ message Symlink {
     required bytes link = 1;
 }
 
-
 // Sender: Oneclient
 // Response: FileAttr
 // Returns attr of the file pointed by the path within space or directory determined by context_guid
@@ -467,7 +495,7 @@ message GetFileAttrByPath {
 // If path already exists, it returns the FileAttr of the last directory on the path
 // If path already exists and points to a file, returns ENOTDIR
 // If path doesn't exist, it creates all directories necessary and returns new FileAttr
-message CreateDirs {
+message CreateDirAtPath {
     required bytes path = 1;
 }
 
