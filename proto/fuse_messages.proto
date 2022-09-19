@@ -51,13 +51,13 @@ message MultipartUploadRequest {
 message MultipartUpload {
     required bytes multipart_upload_id = 1;
     required bytes path = 2;
-    required uint64 timestamp = 3;
+    required uint64 creation_time = 3;
 }
 
 message MultipartUploads {
     repeated MultipartUpload uploads = 1;
     optional bool is_last = 2;
-    optional bytes index_token = 3;
+    optional bytes next_page_token = 3;
 }
 
 // Sender: Oneclient
@@ -90,8 +90,7 @@ message MultipartPart {
 
 message MultipartParts {
     repeated MultipartPart parts = 1;
-    optional int64 next_part_marker = 3;
-    optional bool is_last = 4;
+    optional bool is_last = 2;
 }
 
 // Sender: Oneclient
@@ -187,10 +186,10 @@ message FileRequest {
         MakeSymlink make_symlink = 28;
         ReadSymlink read_symlink = 29;
         GetFileAttrByPath get_file_attr_by_path = 30;
-        CreateDirAtPath create_dir_at_path = 31;
-        FileWrittenRange file_written_range = 32;
-        FileReadRange file_read_range = 33;
-        ListFiles list_files = 34;
+        CreatePath create_path = 31;
+        ReportFileWritten file_written_range = 32;
+        ReportFileRead file_read_range = 33;
+        ListFilesRecursively list_files = 34;
     }
 }
 
@@ -364,7 +363,7 @@ message FuseResponse {
         MultipartParts multipart_parts = 20;
         MultipartUpload multipart_upload = 21;
         MultipartUploads multipart_uploads = 22;
-        FilesList files_list = 23;
+        FileList files_list = 23;
     }
 }
 
@@ -496,14 +495,14 @@ message GetFileAttrByPath {
 // If path already exists, it returns the FileAttr of the last directory on the path
 // If path already exists and points to a file, returns ENOTDIR
 // If path doesn't exist, it creates all directories necessary and returns new FileAttr
-message CreateDirAtPath {
+message CreatePath {
     required bytes path = 1;
 }
 
 // Sender: Oneclient
 // Response: Status[ok]
 // Updates the file location - if necessary - of a file identified by context_guid
-message FileWrittenRange {
+message ReportFileWritten {
     required uint64 offset = 1;
     required uint64 size = 2;
 }
@@ -511,25 +510,25 @@ message FileWrittenRange {
 // Sender: Oneclient
 // Response: Status[ok]
 // Updates the read map of a file identified by context_guid
-message FileReadRange {
+message ReportFileRead {
     required uint64 offset = 1;
     required uint64 size = 2;
 }
 
-message FilesList {
+message FileList {
     repeated FileAttr files = 1;
     optional bool is_last = 2;
     optional bytes next_page_token = 3;
 }
 
 // Sender: Oneclient
-// Response: FilesList
+// Response: FileList
 // Recursively lists non-directory files (i.e regular files, symbolic links and hardlinks) in directory specified by context_guid (listing root).
 // Files are listed in lexicographical order by their paths, which are relative to the listing root directory (context_guid).
-message ListFiles {
-    optional bytes token = 2;
-    optional bytes start_after = 3;
-    optional bytes prefix = 4;
-    optional uint32 limit = 5;
+message ListFilesRecursively {
+    optional bytes token = 1;
+    optional bytes start_after = 2;
+    optional bytes prefix = 3;
+    optional uint32 limit = 4;
 }
 
