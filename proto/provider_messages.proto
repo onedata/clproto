@@ -16,12 +16,12 @@ message ProviderRequest {
     required bytes context_guid = 1;
 
     oneof provider_request { // list of all provider requests
-        GetParent get_parent = 6;
-        GetAcl get_acl = 7;
-        SetAcl set_acl = 8;
-        RemoveAcl remove_acl = 9;
-        GetFilePath get_file_path = 16;
-        CheckPerms check_perms = 23;
+        GetParent get_parent = 2;
+        GetAcl get_acl = 3;
+        SetAcl set_acl = 4;
+        RemoveAcl remove_acl = 5;
+        GetFilePath get_file_path = 6;
+        CheckPerms check_perms = 7;
     }
 }
 
@@ -55,9 +55,9 @@ message ProviderResponse {
     required Status status = 1;
 
     oneof provider_response { // list of all provider responses
-        Acl acl = 7;
-        Dir dir = 8;
-        FilePath file_path = 9;
+        Acl acl = 2;
+        Dir dir = 3;
+        FilePath file_path = 4;
     }
 }
 

@@ -286,6 +286,7 @@ message FileAttr {
     optional bool fully_replicated = 15;
     optional uint32 nlink = 16;
     required bytes index = 17;
+    repeated Xattr xattrs = 18;
 }
 
 message FileChildren {
