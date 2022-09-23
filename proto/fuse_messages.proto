@@ -189,19 +189,21 @@ message FileRequest {
         CreatePath create_path = 31;
         ReportFileWritten file_written_range = 32;
         ReportFileRead file_read_range = 33;
-        ListFilesRecursively list_files = 34;
+        ListFilesRecursively list_files_recursively = 34;
     }
 }
 
 message GetFileAttr {
     optional bool include_replication_status = 1;
     optional bool include_link_count = 2;
+    repeated bytes xattrs = 3;
 }
 
 message GetChildAttr {
     required bytes name = 1;
     optional bool include_replication_status = 2;
     optional bool include_link_count = 3;
+    repeated bytes xattrs = 4;
 }
 
 message GetFileChildren {
@@ -217,6 +219,7 @@ message GetFileChildrenAttrs {
     optional bytes index_token = 3;
     optional bool include_replication_status = 4;
     optional bool include_link_count = 5;
+    repeated bytes xattrs = 6;
 }
 
 message CreateDir {
@@ -490,6 +493,7 @@ message Symlink {
 // or error if path does not exist
 message GetFileAttrByPath {
     required bytes path = 1;
+    repeated bytes xattrs = 2;
 }
 
 // Sender: Oneclient
@@ -533,5 +537,6 @@ message ListFilesRecursively {
     optional bytes prefix = 3;
     optional uint32 limit = 4;
     optional bool include_dirs = 5;
+    repeated bytes xattrs = 6;
 }
 
