@@ -384,6 +384,8 @@ message FileAttr {
     optional bytes parent_uuid = 14;
     optional bool fully_replicated = 15;
     optional uint32 nlink = 16;
+    required bytes index = 17;
+    repeated Xattr xattrs = 18;
 }
 
 message FileChildren {

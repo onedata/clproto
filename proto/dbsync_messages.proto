@@ -77,7 +77,8 @@ message ChangesBatch {
 }
 
 message ChangesRequest2 {
-    required bytes  space_id = 1;
-    required uint64 since    = 2;
-    required uint64 until    = 3;
+    required bytes  space_id          = 1;
+    required uint64 since             = 2;
+    required uint64 until             = 3;
+    repeated bytes  included_mutators = 4;
 }
