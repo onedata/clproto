@@ -33,7 +33,97 @@ message FuseRequest {
         VerifyStorageTestFile verify_storage_test_file = 4;
         FileRequest file_request = 5;
         GetFSStats get_fs_stats = 6;
+        MultipartUploadRequest multipart_upload_request = 7;
     }
+}
+
+message MultipartUploadRequest {
+    oneof multipart_request {
+        CreateMultipartUpload create_multipart_upload = 1;
+        UploadMultipartPart upload_multipart_part = 2;
+        ListMultipartParts list_multipart_parts = 3;
+        AbortMultipartUpload abort_multipart_upload = 4;
+        CompleteMultipartUpload complete_multipart_upload = 5;
+        ListMultipartUploads list_multipart_uploads = 6;
+    }
+}
+
+message MultipartUpload {
+    required bytes multipart_upload_id = 1;
+    required bytes path = 2;
+    required uint64 creation_time = 3;
+}
+
+message MultipartUploads {
+    repeated MultipartUpload uploads = 1;
+    optional bool is_last = 2;
+    optional bytes next_page_token = 3;
+}
+
+// Sender: Oneclient
+// Response: MultipartUploads
+// Returns the list of ongoing multipart uploads of current user in specific space.
+// The results must be paged and ordered by key path and then creation time (multiple uploads can exist for
+// the same path).
+// This does not include uploads which are already aborted or completed.
+message ListMultipartUploads {
+    required bytes space_id = 1;
+    optional uint32 limit = 2; // default 1000
+    optional bytes index_token = 3;
+}
+
+// Sender: Oneclient
+// Response: MultipartUpload
+// Creates a record in the database representing a new multipart upload for specific space and path.
+// Multiple multipart uploads can exist for the same path.
+message CreateMultipartUpload {
+    required bytes space_id = 1;
+    required bytes path = 2;
+}
+
+message MultipartPart {
+    required uint32 number = 1;
+    required uint64 size = 2;
+    required bytes etag = 3;
+    required uint64 last_modified = 4;
+}
+
+message MultipartParts {
+    repeated MultipartPart parts = 1;
+    optional bool is_last = 2;
+}
+
+// Sender: Oneclient
+// Response: Status[ok]
+// Registers a new multipart upload part in the database. If the part with the same number is already registered
+// under the same multipart upload id, it must be overriden by this message.
+// Returns EINVAL if the multipart_upload_id is invalid or multipart upload is already completed or canceled.
+message UploadMultipartPart {
+    required bytes multipart_upload_id = 1;
+    required MultipartPart part = 2;
+}
+
+// Sender: Oneclient
+// Response: MultipartParts
+// Returns EINVAL if the multipart_upload_id is invalid or multipart upload is already completed or canceled.
+message ListMultipartParts {
+    required bytes multipart_upload_id = 1;
+    optional int32 limit = 2; // default 1000
+    optional int64 part_marker = 3;
+}
+
+// Sender: Oneclient
+// Response: Status
+// Returns EINVAL if the multipart_upload_id is invalid or multipart upload is already completed or canceled.
+message CompleteMultipartUpload {
+    required bytes multipart_upload_id = 1;
+}
+
+// Sender: Oneclient
+// Response: Status
+// Returns EINVAL if the multipart_upload_id is invalid or multipart upload is already completed or canceled.
+message AbortMultipartUpload {
+    required bytes multipart_upload_id = 1;
 }
 
 message ResolveGuid {
@@ -95,18 +185,25 @@ message FileRequest {
         MakeLink make_link = 27;
         MakeSymlink make_symlink = 28;
         ReadSymlink read_symlink = 29;
+        GetFileAttrByPath get_file_attr_by_path = 30;
+        CreatePath create_path = 31;
+        ReportFileWritten file_written_range = 32;
+        ReportFileRead file_read_range = 33;
+        ListFilesRecursively list_files_recursively = 34;
     }
 }
 
 message GetFileAttr {
     optional bool include_replication_status = 1;
     optional bool include_link_count = 2;
+    repeated bytes xattrs = 3;
 }
 
 message GetChildAttr {
     required bytes name = 1;
     optional bool include_replication_status = 2;
     optional bool include_link_count = 3;
+    repeated bytes xattrs = 4;
 }
 
 message GetFileChildren {
@@ -122,6 +219,7 @@ message GetFileChildrenAttrs {
     optional bytes index_token = 3;
     optional bool include_replication_status = 4;
     optional bool include_link_count = 5;
+    repeated bytes xattrs = 6;
 }
 
 message CreateDir {
@@ -265,6 +363,10 @@ message FuseResponse {
         FileOpenedExtended file_opened_extended = 17;
         FSStats fs_stats = 18;
         Symlink symlink = 19;
+        MultipartParts multipart_parts = 20;
+        MultipartUpload multipart_upload = 21;
+        MultipartUploads multipart_uploads = 22;
+        FileList files_list = 23;
     }
 }
 
@@ -384,3 +486,57 @@ message FSStats {
 message Symlink {
     required bytes link = 1;
 }
+
+// Sender: Oneclient
+// Response: FileAttr
+// Returns attr of the file pointed by the path relative to space or directory determined by context_guid
+// or error if path does not exist
+message GetFileAttrByPath {
+    required bytes path = 1;
+    repeated bytes xattrs = 2;
+}
+
+// Sender: Oneclient
+// Response: FileAttr
+// If path already exists, it returns the FileAttr of the last directory on the path
+// If path already exists and points to a file, returns ENOTDIR
+// If path doesn't exist, it creates all directories necessary and returns new FileAttr
+message CreatePath {
+    required bytes path = 1;
+}
+
+// Sender: Oneclient
+// Response: Status[ok]
+// Updates the file location - if necessary - of a file identified by context_guid
+message ReportFileWritten {
+    required uint64 offset = 1;
+    required uint64 size = 2;
+}
+
+// Sender: Oneclient
+// Response: Status[ok]
+// Updates the read map of a file identified by context_guid
+message ReportFileRead {
+    required uint64 offset = 1;
+    required uint64 size = 2;
+}
+
+message FileList {
+    repeated FileAttr files = 1;
+    optional bool is_last = 2;
+    optional bytes next_page_token = 3;
+}
+
+// Sender: Oneclient
+// Response: FileList
+// Recursively lists non-directory files (i.e regular files, symbolic links and hardlinks) in directory specified by context_guid (listing root).
+// Files are listed in lexicographical order by their paths, which are relative to the listing root directory (context_guid).
+message ListFilesRecursively {
+    optional bytes token = 1;
+    optional bytes start_after = 2;
+    optional bytes prefix = 3;
+    optional uint32 limit = 4;
+    optional bool include_dirs = 5;
+    repeated bytes xattrs = 6;
+}
+
