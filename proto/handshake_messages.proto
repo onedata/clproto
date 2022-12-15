@@ -38,12 +38,14 @@ enum ClientType {
 }
 
 message ClientHandshakeRequest {
-    optional bytes session_id                      = 1;
-    optional Macaroon macaroon                     = 2;
-    required bytes version                         = 3;
-    repeated bytes compatible_oneprovider_versions = 4;
-    required SessionMode session_mode              = 5;
-    optional ClientType client_type                = 6; // default ONECLIENT
+    optional bytes session_id                              = 1;
+    optional Macaroon macaroon                             = 2;
+    required bytes version                                 = 3;
+    repeated bytes compatible_oneprovider_versions         = 4;
+    required SessionMode session_mode                      = 5;
+    optional ClientType client_type                        = 6; // default ONECLIENT
+    repeated ClientOption client_options                   = 7;
+    repeated ClientSystemProperty client_system_properties = 8;
 }
 
 message ProviderHandshakeRequest {
@@ -58,4 +60,14 @@ message HandshakeResponse {
 message Macaroon {
     required bytes macaroon        = 1;
     repeated bytes disch_macaroons = 2;
+}
+
+message ClientOption {
+    required bytes name  = 1;
+    required bytes value = 2;
+}
+
+message ClientSystemProperty {
+    required bytes name  = 1;
+    required bytes value = 2;
 }
