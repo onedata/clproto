@@ -32,9 +32,9 @@ enum SessionMode {
 }
 
 enum ClientType {
-    ONECLIENT = 1;
-    ONEDATAFS = 2;
-    ONES3 = 3;
+    ONECLIENT_TYPE = 1;
+    ONEDATAFS_TYPE = 2;
+    ONES3_TYPE = 3;
 }
 
 message ClientHandshakeRequest {
