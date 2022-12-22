@@ -31,12 +31,21 @@ enum SessionMode {
     OPEN_HANDLE = 2;
 }
 
+enum ClientType {
+    ONECLIENT_TYPE = 1;
+    ONEDATAFS_TYPE = 2;
+    ONES3_TYPE = 3;
+}
+
 message ClientHandshakeRequest {
-    optional bytes session_id                      = 1;
-    optional Macaroon macaroon                     = 2;
-    required bytes version                         = 3;
-    repeated bytes compatible_oneprovider_versions = 4;
-    required SessionMode session_mode              = 5;
+    optional bytes session_id                              = 1;
+    optional Macaroon macaroon                             = 2;
+    required bytes version                                 = 3;
+    repeated bytes compatible_oneprovider_versions         = 4;
+    required SessionMode session_mode                      = 5;
+    optional ClientType client_type                        = 6; // default ONECLIENT
+    repeated ClientOption client_options                   = 7;
+    repeated ClientSystemProperty client_system_properties = 8;
 }
 
 message ProviderHandshakeRequest {
@@ -45,10 +54,20 @@ message ProviderHandshakeRequest {
 }
 
 message HandshakeResponse {
-    required HandshakeStatus status                       = 1;
+    required HandshakeStatus status = 1;
 }
 
 message Macaroon {
     required bytes macaroon        = 1;
     repeated bytes disch_macaroons = 2;
+}
+
+message ClientOption {
+    required bytes name  = 1;
+    required bytes value = 2;
+}
+
+message ClientSystemProperty {
+    required bytes name  = 1;
+    required bytes value = 2;
 }
