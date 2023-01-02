@@ -60,6 +60,7 @@ message ProviderCurrentDirSizeStatsBrowseResult {
 message StorageRegDistributionGetResult {
     required bytes storage_id = 1;
     repeated FileBlock blocks = 2;
+    optional bytes location = 3;
 }
 
 message ProviderRegDistributionGetResult {
