@@ -19,7 +19,7 @@ message ProviderRpcCall {
         ProviderCurrentDirSizeStatsBrowseRequest provider_current_dir_size_stats_browse_request  = 2;
         ProviderHistoricalDirSizeStatsBrowseRequest provider_historical_dir_size_stats_browse_request  = 3;
         ProviderRegDistributionGetRequest provider_reg_distribution_get_request = 4;
-        ProviderRegStorageLocationGetRequest provider_reg_storage_location_get_request = 5;
+        ProviderRegStorageLocationsGetRequest provider_reg_storage_locations_get_request = 5;
     }
 }
 
@@ -37,7 +37,7 @@ message ProviderHistoricalDirSizeStatsBrowseRequest {
 message ProviderRegDistributionGetRequest {
 }
 
-message ProviderRegStorageLocationGetRequest {
+message ProviderRegStorageLocationsGetRequest {
 }
 
 
@@ -54,7 +54,7 @@ message ProviderRpcResponse {
         TimeSeriesLayoutGetResult time_series_layout_get_result = 4;
         TimeSeriesSliceGetResult time_series_slice_get_result = 5;
         ProviderRegDistributionGetResult provider_reg_distribution_get_result = 6;
-        ProviderRegStorageLocationResult provider_reg_storage_location_result = 7;
+        ProviderRegStorageLocationsResult provider_reg_storage_locations_result = 7;
     }
 }
 
@@ -78,6 +78,6 @@ message StorageLocation {
     optional bytes location = 2;
 }
 
-message ProviderRegStorageLocationResult {
+message ProviderRegStorageLocationsResult {
     repeated StorageLocation locations = 1;
 }
