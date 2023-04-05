@@ -20,6 +20,7 @@ message ProviderRpcCall {
         ProviderHistoricalDirSizeStatsBrowseRequest provider_historical_dir_size_stats_browse_request  = 3;
         ProviderRegDistributionGetRequest provider_reg_distribution_get_request = 4;
         ProviderRegStorageLocationsGetRequest provider_reg_storage_locations_get_request = 5;
+        ProviderQosStatusGetRequest provider_qos_status_get_request = 6;
     }
 }
 
@@ -40,6 +41,11 @@ message ProviderRegDistributionGetRequest {
 message ProviderRegStorageLocationsGetRequest {
 }
 
+message ProviderQosStatusGetRequest {
+    required string qos_entry_id = 1;
+}
+
+
 
 // Generic provider RPC response
 message ProviderRpcResponse {
@@ -55,6 +61,7 @@ message ProviderRpcResponse {
         TimeSeriesSliceGetResult time_series_slice_get_result = 5;
         ProviderRegDistributionGetResult provider_reg_distribution_get_result = 6;
         ProviderRegStorageLocationsResult provider_reg_storage_locations_result = 7;
+        ProviderQosStatusGetResult provider_qos_status_get_result = 8;
     }
 }
 
@@ -80,4 +87,13 @@ message StorageLocation {
 
 message ProviderRegStorageLocationsResult {
     repeated StorageLocation locations = 1;
+}
+
+message ProviderQosStatusGetResult {
+    enum Status {
+        pending = 1;
+        fulfilled = 2;
+        impossible = 3;
+    };
+    required Status status = 1;
 }
