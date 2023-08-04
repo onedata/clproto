@@ -16,6 +16,7 @@ message TimeSeriesSliceGetRequest {
     required bytes layout_as_json = 1;
     optional uint64 start_timestamp = 2;
     optional uint64 window_limit = 3;
+    optional uint64 stop_timestamp = 4;
 }
 
 message TimeSeriesLayoutGetResult {
