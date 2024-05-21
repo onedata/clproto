@@ -69,11 +69,11 @@ FIND_PROGRAM(ERLANG_COMPILE
 )
 
 EXECUTE_PROCESS(COMMAND
-         erl -noshell -eval "io:format(\"~s\", [code:lib_dir()])" -s erlang halt
+         erl -noshell -eval "io:format(\"~ts\", [code:lib_dir()])" -s erlang halt
          OUTPUT_VARIABLE ERLANG_OTP_LIB_DIR)
 
 EXECUTE_PROCESS(COMMAND
-         erl -noshell -eval "io:format(\"~s\", [code:root_dir()])" -s erlang halt
+         erl -noshell -eval "io:format(\"~ts\", [code:root_dir()])" -s erlang halt
          OUTPUT_VARIABLE ERLANG_OTP_ROOT_DIR)
 
 MESSAGE(STATUS "Using OTP lib: ${ERLANG_OTP_LIB_DIR} - found")
