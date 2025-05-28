@@ -74,6 +74,7 @@ message ProviderRpcResponse {
 message ProviderDirDistributionGetResult {
     required ProviderCurrentDirSizeStatsBrowseResult dir_size_stats = 1;
     repeated StorageLocation storage_location = 2;
+    optional bytes storage_locations_error = 3;
 }
 
 message ProviderCurrentDirSizeStatsBrowseResult {
