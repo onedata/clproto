@@ -74,11 +74,11 @@ message ProviderRpcResponse {
 message ProviderDirDistributionGetResult {
     required ProviderCurrentDirSizeStatsBrowseResult dir_size_stats = 1;
     repeated StorageLocation storage_location = 2;
-    optional bytes storage_locations_error = 3;
 }
 
 message ProviderCurrentDirSizeStatsBrowseResult {
     required bytes stats_as_json = 1;
+    optional bytes error_json = 2;
 }
 
 message StorageRegDistributionGetResult {
@@ -95,6 +95,7 @@ message ProviderRegDistributionGetResult {
 message StorageLocation {
     required bytes storage_id = 1;
     optional bytes location = 2;
+    optional bytes error_json = 3;
 }
 
 message ProviderRegStorageLocationsResult {
