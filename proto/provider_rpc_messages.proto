@@ -25,10 +25,6 @@ message ProviderRpcCall {
     }
 }
 
-message ProviderDirDistributionGetRequest {
-    required ProviderCurrentDirSizeStatsBrowseRequest stats_request = 1;
-}
-
 message ProviderCurrentDirSizeStatsBrowseRequest {
     repeated bytes stat_names = 1;
 }
@@ -50,6 +46,10 @@ message ProviderQosStatusGetRequest {
     required string qos_entry_id = 1;
 }
 
+message ProviderDirDistributionGetRequest {
+    required ProviderCurrentDirSizeStatsBrowseRequest stats_request = 1;
+}
+
 
 
 // Generic provider RPC response
@@ -69,11 +69,6 @@ message ProviderRpcResponse {
         ProviderQosStatusGetResult provider_qos_status_get_result = 8;
         ProviderDirDistributionGetResult provider_dir_distribution_get_result = 9;
     }
-}
-
-message ProviderDirDistributionGetResult {
-    required ProviderCurrentDirSizeStatsBrowseResult dir_size_stats = 1;
-    repeated StorageLocation storage_location = 2;
 }
 
 message ProviderCurrentDirSizeStatsBrowseResult {
@@ -109,4 +104,9 @@ message ProviderQosStatusGetResult {
         impossible = 3;
     };
     required Status status = 1;
+}
+
+message ProviderDirDistributionGetResult {
+    required ProviderCurrentDirSizeStatsBrowseResult dir_size_stats = 1;
+    repeated StorageLocation storage_location = 2;
 }
