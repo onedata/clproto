@@ -20,7 +20,6 @@ import "diagnostic_messages.proto";
 import "proxyio_messages.proto";
 import "dbsync_messages.proto";
 import "provider_rpc_messages.proto"; 
-import "provider_messages.proto";
 import "remote_driver_messages.proto";
 import "rtransfer_messages.proto";
 // This file is required by Oneprovider for RTransfer
@@ -69,24 +68,17 @@ message ClientMessage {
         DBSyncRequest               dbsync_request                 = 20;
         DBSyncMessage               dbsync_message                 = 21;
 
-        // provider_messages.proto
-        ProviderRequest             provider_request               = 22;
-
         // remote_driver_messages.proto
-        GetRemoteDocument           get_remote_document            = 23;
+        GetRemoteDocument           get_remote_document            = 22;
 
         // rtransfer_messages.proto
-        GenerateRTransferConnSecret generate_rtransfer_conn_secret = 24;
-        GetRTransferNodesIPs        get_rtransfer_nodes_ips        = 27;
-        CloseSession                close_session                  = 29;
+        GenerateRTransferConnSecret generate_rtransfer_conn_secret = 23;
+        GetRTransferNodesIPs        get_rtransfer_nodes_ips        = 24;
+        CloseSession                close_session                  = 25;
 
         // provider_rpc_messages.proto
-        ProviderRpcCall             provider_rpc_call              = 30;
+        ProviderRpcCall             provider_rpc_call              = 26;
     }
-    
-    optional bytes proxy_session_id                                = 25;
-    optional Macaroon proxy_session_macaroon                       = 26;
-    optional SessionMode proxy_session_mode                        = 28;
 }
 
 // Messages that can be sent by the server to the client.
@@ -125,24 +117,19 @@ message ServerMessage {
         // proxyio_messages.proto
         ProxyIOResponse          proxyio_response          = 16;
 
-        // provider_messages.proto
-        ProviderResponse         provider_response         = 17;
-
         // remote_driver_messages.proto
-        RemoteDocument           remote_document           = 18;
+        RemoteDocument           remote_document           = 17;
 
         // heartbeat or unknown error
-        ProcessingStatus         processing_status         = 19;
+        ProcessingStatus         processing_status         = 18;
 
         // rtransfer_messages.proto
-        RTransferConnSecret      rtransfer_conn_secret     = 20;
-        RTransferNodesIPs        rtransfer_nodes_ips       = 22;
+        RTransferConnSecret      rtransfer_conn_secret     = 19;
+        RTransferNodesIPs        rtransfer_nodes_ips       = 20;
         
         // provider_rpc_messages.proto
-        ProviderRpcResponse      provider_rpc_response     = 23; 
+        ProviderRpcResponse      provider_rpc_response     = 21; 
     }
-
-    optional bytes proxy_session_id                        = 21;
 }
 
 enum ProcessingCode {
